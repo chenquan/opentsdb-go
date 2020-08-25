@@ -28,13 +28,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/chenquan/opentsdb-go/config"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/bluebreezecf/opentsdb-goclient/config"
 )
 
 const (
@@ -491,9 +490,9 @@ func (c *clientImpl) WithContext(ctx context.Context) Client {
 // response with the specific type. Otherwise, the returned error is not nil.
 func (c *clientImpl) sendRequest(method, url, reqBodyCnt string, parsedResp Response) error {
 	req, err := http.NewRequest(method, url, strings.NewReader(reqBodyCnt))
-        if c.ctx != nil {
-          req = req.WithContext(c.ctx)
-        }
+	if c.ctx != nil {
+		req = req.WithContext(c.ctx)
+	}
 	if err != nil {
 		return errors.New(fmt.Sprintf("Failed to create request for %s %s: %v", method, url, err))
 	}
